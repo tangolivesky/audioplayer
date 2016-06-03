@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="audioplayer.css">
+</head>
+<body>
+
+<div id="audiopalylist">
+
+</div>
+
+
+<script type="text/javascript" src="audioplayer.js"></script>
+
+<script type="text/javascript">
+
+
+    var config = {
+        audio:{src:"http://www.alexkatz.me/codepen/music/interlude.mp3"}
+    }
+    var audioPlayer = new AudioPlayer(config);
+    var audioPlayer2 = new AudioPlayer(config);
+
+    document.getElementById("audiopalylist").appendChild(audioPlayer.getAudioPlayer());
+    document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
+
+</script>
+
+</body>
+</html>
