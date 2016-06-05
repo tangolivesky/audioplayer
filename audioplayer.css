@@ -1,5 +1,5 @@
 .audioplayer{
-    width: 480px;
+    width: 400px;
     height: 30px;
     background-color: #eeeeee;
     border-radius: 5px;
@@ -28,7 +28,7 @@
 }
 
 .audioplayer .timeline{
-    width: 400px;
+    width: 240px;
     height: 6px;
     margin-top: 12px;
     float: left;
@@ -40,9 +40,9 @@
     width: 16px;
     height: 16px;
     border-radius: 100%;
-    margin-top: -7px;
+    margin-top: -5px;
     background: #2fc8a6;
-    padding: 2px;
+    /*padding: 2px;*/
 }
 
 
@@ -53,7 +53,35 @@
     height: 100%;
 }
 
-.current-time{
+.audioplayer .current-time{
     float: left;
-    width:50px;
+    width: 40px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+}
+
+.audioplayer .audio-line{
+    float: left;
+    width:60px;
+    height: 6px;
+    margin-top: 12px;
+    border-radius: 15px;
+    background: #FFFFFF;
+    position: relative;
+}
+
+.audioplayer .audio-line-head{
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    margin-top: -5px;
+    background: #2fc8a6;
+}
+
+.audioplayer .audio-line-bar{
+    background: #2fc8a6;
+    position: absolute;
+    z-index: 10;
+    height: 100%;
 }
