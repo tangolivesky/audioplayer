@@ -14,12 +14,12 @@ var AudioPlayer = (function () {
         var timeProgressBar = document.createElement("span");
         var playhead = document.createElement("div");
         var currentTime = document.createElement("div");
-        var audioLine = document.createElement("div");
-        var audioLineBar = document.createElement("span");
-        var audioLineHead = document.createElement("div");
+        var volumeLine = document.createElement("div");
+        var volumeLineBar = document.createElement("span");
+        var volumeLineHead = document.createElement("div");
 
-        var timelineWidth =230;
-        var audiolinewidth = 60;
+        var timelineWidth = 230;
+        var volumelinewidth = 35;
         var onplayhead = false;
 
         this.myAudioPlayer = myAudioPlayer;
@@ -36,14 +36,11 @@ var AudioPlayer = (function () {
         timeProgressBar.className = "time-progress-bar";
         playhead.className = "playhead";
         currentTime.className = "current-time";
-        if (config.hasOwnProperty("audio")) {
-            if (config.audio.hasOwnProperty("src"))audioPlayer.setAttribute('src', config.audio.src);
-        }
         audioPlayer.setAttribute('controls', 'controls');
         audioPlayer.style.display = "none";
-        audioLine.className= "audio-line";
-        audioLineHead.className = "audio-line-head";
-        audioLineBar.className = "audio-line-bar";
+        volumeLine.className = "audio-line";
+        volumeLineHead.className = "audio-line-head";
+        volumeLineBar.className = "audio-line-bar";
 
         myAudioPlayer.appendChild(playButton);
         timeLine.appendChild(timeProgressBar);
@@ -51,29 +48,40 @@ var AudioPlayer = (function () {
         myAudioPlayer.appendChild(timeLine);
         myAudioPlayer.appendChild(currentTime);
         myAudioPlayer.appendChild(audioPlayer);
-        audioLine.appendChild(audioLineBar);
-        audioLine.appendChild(audioLineHead);
-        myAudioPlayer.appendChild(audioLine);
+        volumeLine.appendChild(volumeLineBar);
+        volumeLine.appendChild(volumeLineHead);
+        myAudioPlayer.appendChild(volumeLine);
 
-        //timelineWidth = 230;
-        //timeLine.offsetWidth - playhead.offsetWidth;
+        if (config.hasOwnProperty("audiosrc")) {
+            audioPlayer.setAttribute('src', config.audiosrc);
+        }
+        if(config.hasOwnProperty("showVolume")){
+            if(!config.showVolume){
+                volumeLine.style.display='none';
+                volumeLineHead.style.display='none';
+                volumeLineBar.style.display='none';
+                myAudioPlayer.style.width ='330px';
+            }
+        }
 
 
         playButton.addEventListener('click', play, false);
-        audioPlayer.addEventListener("timeupdate", timeUpdate, false);
-        audioPlayer.addEventListener("canplaythrough", function () {
+        audioPlayer.addEventListener('timeupdate', timeUpdate, false);
+        audioPlayer.addEventListener('canplaythrough', function () {
             duration = audioPlayer.duration;
         }, false);
-        timeLine.addEventListener("click",function (event) {
+        timeLine.addEventListener('click', function (event) {
             moveplayhead(event);
             audioPlayer.currentTime = duration * clickPercent(event);
         }, false);
         playhead.addEventListener('mousedown', mouseDown, false);
         window.addEventListener('mouseup', mouseUp, false);
-        audioLine.addEventListener("click",function(event){
-            moveaudiohead(event);
+        volumeLine.addEventListener('click', function (event) {
+            movevolumehead(event);
             audioPlayer.volume = volumeClickPercent(event);
-        },false);
+        }, false);
+        volumeLineHead.addEventListener('mousedown', volumeMouseDown, false);
+        window.addEventListener('mouseup', volumeMouseUp, false);
 
         function mouseDown() {
             onplayhead = true;
@@ -96,15 +104,19 @@ var AudioPlayer = (function () {
             return (e.pageX - timeLine.offsetLeft) / timelineWidth;
         }
 
-        function volumeClickPercent(e){
-            return (e.pageX - audioLine.offsetLeft)/audiolinewidth;
+        function volumeClickPercent(e) {
+            var volume = 0;
+            if ((e.pageX - volumeLine.offsetLeft) / volumelinewidth < 0)volume = 0;
+            if ((e.pageX - volumeLine.offsetLeft) / volumelinewidth > 1)volume = 1;
+            if ((e.pageX - volumeLine.offsetLeft) / volumelinewidth >= 0 && (e.pageX - volumeLine.offsetLeft) / volumelinewidth <= 1)volume = (e.pageX - volumeLine.offsetLeft) / volumelinewidth;
+            return volume;
         }
 
         function moveplayhead(e) {
             var newMargLeft = e.pageX - timeLine.offsetLeft;
             if (newMargLeft >= 0 && newMargLeft <= timelineWidth) {
                 playhead.style.marginLeft = newMargLeft + "px";
-                timeProgressBar.style.width = newMargLeft*100/timelineWidth + "%";
+                timeProgressBar.style.width = newMargLeft * 100 / timelineWidth + "%";
             }
             if (newMargLeft < 0) {
                 playhead.style.marginLeft = "0px";
@@ -116,19 +128,19 @@ var AudioPlayer = (function () {
             }
         }
 
-        function moveaudiohead(e) {
-            var newMargLeft = e.pageX - audioLine.offsetLeft;
-            if (newMargLeft >= 0 && newMargLeft <= audiolinewidth) {
-                audioLineHead.style.marginLeft = newMargLeft + "px";
-                audioLineBar.style.width = newMargLeft*100/audiolinewidth + "%";
+        function movevolumehead(e) {
+            var newMargLeft = e.pageX - volumeLine.offsetLeft;
+            if (newMargLeft >= 0 && newMargLeft <= volumelinewidth) {
+                volumeLineHead.style.marginLeft = newMargLeft + "px";
+                volumeLineBar.style.width = newMargLeft * 100 / volumelinewidth + "%";
             }
             if (newMargLeft < 0) {
-                audioLineHead.style.marginLeft = "0px";
-                audioLineBar.style.width = "0%";
+                volumeLineHead.style.marginLeft = "0px";
+                volumeLineBar.style.width = "0%";
             }
             if (newMargLeft > timelineWidth) {
-                audioLineHead.style.marginLeft = audiolinewidth + "px";
-                audioLineBar.style.width = "100%";
+                volumeLineHead.style.marginLeft = volumelinewidth + "px";
+                volumeLineBar.style.width = "100%";
             }
         }
 
@@ -147,16 +159,31 @@ var AudioPlayer = (function () {
             }
         }
 
-        function timeUpdate(){
+        function timeUpdate() {
             var playPercent = audioPlayer.currentTime / duration;
-            var playPercentWidth = timelineWidth*playPercent;
-            currentTime.innerHTML = (audioPlayer.currentTime/60).toFixed(2);
+            var playPercentWidth = timelineWidth * playPercent;
+            currentTime.innerHTML = (audioPlayer.currentTime / 60).toFixed(2);
             playhead.style.marginLeft = playPercentWidth + "px";
-            timeProgressBar.style.width = playPercent*100 + "%";
+            timeProgressBar.style.width = playPercent * 100 + "%";
             if (playPercentWidth.currentTime == duration) {
                 playButton.className = "";
                 playButton.className = "playbutton play";
             }
+        }
+
+        function volumeMouseDown() {
+            onplayhead = true;
+            window.addEventListener('mousemove', movevolumehead, true);
+            //audioPlayer.removeEventListener('timeupdate', timeUpdate, false);
+        }
+
+        function volumeMouseUp(e) {
+            if (onplayhead == true) {
+                movevolumehead(e);
+                window.removeEventListener('mousemove', movevolumehead, true);
+                audioPlayer.volume = volumeClickPercent(e);
+            }
+            onplayhead = false;
         }
 
     }
@@ -165,7 +192,7 @@ var AudioPlayer = (function () {
         return this.myAudioPlayer;
     };
 
-    AudioPlayer.prototype.record = function(recordTime){
+    AudioPlayer.prototype.record = function (recordTime) {
 
         var ct = 0;
         var playhead = this.playhead;
@@ -173,23 +200,23 @@ var AudioPlayer = (function () {
         var timeProgressBar = this.timeProgressBar;
         var playButton = this.playButton;
         var currentTime = this.currentTime;
-        playButton.setAttribute("disabled","true");
+        playButton.setAttribute("disabled", "true");
 
         var recoding = setInterval(
-        function showProgress(){
-            ct = ct+0.5;
-            currentTime.innerHTML = ct;
-            var playPercent = ct/recordTime;
-            var playPercentWidth = timeLineWidth * playPercent;
-            playhead.style.marginLeft = playPercentWidth + "px";
-            timeProgressBar.style.width = playPercent*100 + "%";
-        },500);
+            function showProgress() {
+                ct = ct + 0.5;
+                currentTime.innerHTML = ct;
+                var playPercent = ct / recordTime;
+                var playPercentWidth = timeLineWidth * playPercent;
+                playhead.style.marginLeft = playPercentWidth + "px";
+                timeProgressBar.style.width = playPercent * 100 + "%";
+            }, 500);
 
-        setTimeout(function stopProgress(){
+        setTimeout(function stopProgress() {
             clearInterval(recoding);
             playButton.removeAttribute("disabled");
 
-        },recordTime*1000);
+        }, recordTime * 1000);
 
 
     };
