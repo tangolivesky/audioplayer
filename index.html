@@ -12,6 +12,8 @@
 
 </div>
 
+<button type="button" id="btn_stop" onclick="stoprecord()">停止</button>
+
 
 <script type="text/javascript" src="audioplayer.js"></script>
 
@@ -20,14 +22,21 @@
 
     var config = {
         audiosrc:"http://www.alexkatz.me/codepen/music/interlude.mp3",
-        showVolume:false
+        showVolume:true
     }
     var audioPlayer = new AudioPlayer(config);
     var audioPlayer2 = new AudioPlayer(config);
 
     document.getElementById("audiopalylist").appendChild(audioPlayer.getAudioPlayer());
 
+    document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
+
     //audioPlayer.record(20);
+
+    function stoprecord(){
+        alert("ok");
+        audioPlayer.stoprecord();
+    }
 
     //document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
 

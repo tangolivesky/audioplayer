@@ -19,7 +19,7 @@ var AudioPlayer = (function () {
         var volumeLineHead = document.createElement("div");
 
         var timelineWidth = 230;
-        var volumelinewidth = 35;
+        var volumelinewidth = 50;
         var onplayhead = false;
 
         this.myAudioPlayer = myAudioPlayer;
@@ -80,8 +80,8 @@ var AudioPlayer = (function () {
             movevolumehead(event);
             audioPlayer.volume = volumeClickPercent(event);
         }, false);
-        volumeLineHead.addEventListener('mousedown', volumeMouseDown, false);
-        window.addEventListener('mouseup', volumeMouseUp, false);
+        //volumeLineHead.addEventListener('mousedown', volumeMouseDown, false);
+        //window.addEventListener('mouseup', volumeMouseUp, false);
 
         function mouseDown() {
             onplayhead = true;
@@ -129,9 +129,10 @@ var AudioPlayer = (function () {
         }
 
         function movevolumehead(e) {
+            //debugger;
             var newMargLeft = e.pageX - volumeLine.offsetLeft;
             if (newMargLeft >= 0 && newMargLeft <= volumelinewidth) {
-                volumeLineHead.style.marginLeft = newMargLeft + "px";
+                volumeLineHead.style.marginLeft = newMargLeft-10 + "px";
                 volumeLineBar.style.width = newMargLeft * 100 / volumelinewidth + "%";
             }
             if (newMargLeft < 0) {
@@ -139,7 +140,7 @@ var AudioPlayer = (function () {
                 volumeLineBar.style.width = "0%";
             }
             if (newMargLeft > timelineWidth) {
-                volumeLineHead.style.marginLeft = volumelinewidth + "px";
+                volumeLineHead.style.marginLeft = volumelinewidth-10 + "px";
                 volumeLineBar.style.width = "100%";
             }
         }
@@ -212,6 +213,9 @@ var AudioPlayer = (function () {
                 timeProgressBar.style.width = playPercent * 100 + "%";
             }, 500);
 
+
+        this.recording = recoding;
+
         setTimeout(function stopProgress() {
             clearInterval(recoding);
             playButton.removeAttribute("disabled");
@@ -220,6 +224,13 @@ var AudioPlayer = (function () {
 
 
     };
+
+    AudioPlayer.prototype.stoprecord = function(){
+
+        var recording = this.recording;
+        clearInterval(recoding);
+        playButton.removeAttribute("disabled");
+    }
 
     return AudioPlayer;
 })();
