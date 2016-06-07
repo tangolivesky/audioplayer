@@ -22,7 +22,7 @@
 
     var config = {
         audiosrc:"http://www.alexkatz.me/codepen/music/interlude.mp3",
-        showVolume:true
+        showVolume:false
     }
     var audioPlayer = new AudioPlayer(config);
     var audioPlayer2 = new AudioPlayer(config);
@@ -31,7 +31,7 @@
 
     //document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
 
-    audioPlayer.record(20);
+    //audioPlayer.record(20);
 
     function stoprecord(){
         audioPlayer.stoprecord();
