@@ -17,7 +17,9 @@ var AudioPlayer = (function () {
         var volumeLine = document.createElement("div");
         var volumeLineBar = document.createElement("span");
         var volumeLineHead = document.createElement("div");
+        var volumeHorn = document.createElement('span');
         var playheadSpan = document.createElement('span');
+
 
         var timelineWidth = 230;
         var volumelinewidth = 50;
@@ -32,6 +34,7 @@ var AudioPlayer = (function () {
         this.transTime = transTime;
         this.intialStatus = intialStatus;
         this.playStatus = playStatus;
+        this.volumeHorn = volumeHorn;
 
 
         myAudioPlayer.className = "audioplayer";
@@ -46,6 +49,7 @@ var AudioPlayer = (function () {
         volumeLine.className = "audio-line";
         volumeLineHead.className = "audio-line-head";
         volumeLineBar.className = "audio-line-bar";
+        volumeHorn.className = 'horn full';
 
         myAudioPlayer.appendChild(playButton);
         playhead.appendChild(playheadSpan);
@@ -56,6 +60,7 @@ var AudioPlayer = (function () {
         myAudioPlayer.appendChild(audioPlayer);
         volumeLine.appendChild(volumeLineBar);
         volumeLine.appendChild(volumeLineHead);
+        myAudioPlayer.appendChild(volumeHorn);
         myAudioPlayer.appendChild(volumeLine);
 
         currentTime.innerHTML = '00:00';
@@ -65,10 +70,10 @@ var AudioPlayer = (function () {
         }
         if(config.hasOwnProperty("showVolume")){
             if(!config.showVolume){
-                volumeLine.style.display='none';
-                volumeLineHead.style.display='none';
-                volumeLineBar.style.display='none';
-                myAudioPlayer.style.width ='340px';
+                volumeLine.style.display='block';
+                volumeLineHead.style.display='block';
+                volumeLineBar.style.display='block';
+                myAudioPlayer.style.width ='430px';
             }
         }
 
@@ -87,6 +92,15 @@ var AudioPlayer = (function () {
         volumeLine.addEventListener('click', function (event) {
             movevolumehead(event);
             audioPlayer.volume = volumeClickPercent(event);
+            if (audioPlayer.volume == 0) {
+                volumeHorn.className = 'horn';
+            }else if(audioPlayer.volume>=0.8){
+                volumeHorn.className = 'horn full';
+            }else if(audioPlayer.volume>=0.5){
+                volumeHorn.className = 'horn two';
+            }else if(audioPlayer.volume>0){
+                volumeHorn.className = 'horn one';
+            }
         }, false);
         //volumeLineHead.addEventListener('mousedown', volumeMouseDown, false);
         //window.addEventListener('mouseup', volumeMouseUp, false);
