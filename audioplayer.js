@@ -32,7 +32,7 @@ var AudioPlayer = (function () {
         this.transTime = transTime;
         this.intialStatus = intialStatus;
         this.playStatus = playStatus;
-
+        this.audioPlayer = audioPlayer;
 
         myAudioPlayer.className = "audioplayer";
         playButton.className = "playbutton play";
@@ -249,6 +249,10 @@ var AudioPlayer = (function () {
         return this.myAudioPlayer;
     };
 
+    AudioPlayer.prototype.setAudioSrc = function (src) {
+        this.audioPlayer.setAttribute('src',src);
+    }
+
     AudioPlayer.prototype.record = function (recordTime) {
 
         var ct = 0;
@@ -262,6 +266,7 @@ var AudioPlayer = (function () {
         var playStatus = this.playStatus;
 
         playButton.setAttribute("disabled", "true");
+
         var recoding = setInterval(
             function showProgress() {
                 ct = ct + 1;
@@ -280,7 +285,6 @@ var AudioPlayer = (function () {
 
         }, recordTime * 1000);
 
-        
         playStatus();
     };
 
@@ -289,7 +293,7 @@ var AudioPlayer = (function () {
         var recording = this.recording;
         clearInterval(recoding);
         playButton.removeAttribute("disabled");
-    }
+    };
 
     return AudioPlayer;
 })();
