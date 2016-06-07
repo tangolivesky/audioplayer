@@ -64,7 +64,7 @@ var AudioPlayer = (function () {
                 volumeLine.style.display='none';
                 volumeLineHead.style.display='none';
                 volumeLineBar.style.display='none';
-                myAudioPlayer.style.width ='330px';
+                myAudioPlayer.style.width ='340px';
             }
         }
 

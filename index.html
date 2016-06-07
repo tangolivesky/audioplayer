@@ -29,12 +29,11 @@
 
     document.getElementById("audiopalylist").appendChild(audioPlayer.getAudioPlayer());
 
-    document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
+    //document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
 
-    //audioPlayer.record(20);
+    audioPlayer.record(20);
 
     function stoprecord(){
-        alert("ok");
         audioPlayer.stoprecord();
     }
 
