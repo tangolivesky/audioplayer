@@ -23,10 +23,10 @@
 }
 
 .audioplayer .pause{
-    background: url('http://www.alexkatz.me/codepen/images/pause.png') !important;
-    background-size: 60% 60% !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
+    background: url('./pause.png');
+    background-size: 60% 60%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .audioplayer .timeline{

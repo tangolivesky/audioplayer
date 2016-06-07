@@ -30,6 +30,8 @@ var AudioPlayer = (function () {
         this.playButton = playButton;
         this.currentTime = currentTime;
         this.transTime = transTime;
+        this.intialStatus = intialStatus;
+        this.playStatus = playStatus;
 
 
         myAudioPlayer.className = "audioplayer";
@@ -256,9 +258,10 @@ var AudioPlayer = (function () {
         var playButton = this.playButton;
         var currentTime = this.currentTime;
         var transTime = this.transTime;
+        var intialStatus = this.intialStatus;
+        var playStatus = this.playStatus;
 
         playButton.setAttribute("disabled", "true");
-
         var recoding = setInterval(
             function showProgress() {
                 ct = ct + 1;
@@ -277,7 +280,8 @@ var AudioPlayer = (function () {
 
         }, recordTime * 1000);
 
-
+        
+        playStatus();
     };
 
     AudioPlayer.prototype.stoprecord = function(){
