@@ -71,7 +71,6 @@
 
 .audioplayer .current-time{
     float: left !important;
-    width: 40px !important;
     height: 30px !important;
     line-height: 30px !important;
     padding: 0 10px !important;
