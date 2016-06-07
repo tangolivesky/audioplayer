@@ -17,6 +17,7 @@ var AudioPlayer = (function () {
         var volumeLine = document.createElement("div");
         var volumeLineBar = document.createElement("span");
         var volumeLineHead = document.createElement("div");
+        var playheadSpan = document.createElement('span');
 
         var timelineWidth = 230;
         var volumelinewidth = 50;
@@ -28,13 +29,15 @@ var AudioPlayer = (function () {
         this.timelineWidth = timelineWidth;
         this.playButton = playButton;
         this.currentTime = currentTime;
+        this.transTime = transTime;
 
 
         myAudioPlayer.className = "audioplayer";
         playButton.className = "playbutton play";
         timeLine.className = "timeline";
         timeProgressBar.className = "time-progress-bar";
-        playhead.className = "playhead";
+        playhead.className = "playhead intial";
+        playheadSpan.className = 'round';
         currentTime.className = "current-time";
         audioPlayer.setAttribute('controls', 'controls');
         audioPlayer.style.display = "none";
@@ -43,6 +46,7 @@ var AudioPlayer = (function () {
         volumeLineBar.className = "audio-line-bar";
 
         myAudioPlayer.appendChild(playButton);
+        playhead.appendChild(playheadSpan);
         timeLine.appendChild(timeProgressBar);
         timeLine.appendChild(playhead);
         myAudioPlayer.appendChild(timeLine);
@@ -83,13 +87,30 @@ var AudioPlayer = (function () {
         //volumeLineHead.addEventListener('mousedown', volumeMouseDown, false);
         //window.addEventListener('mouseup', volumeMouseUp, false);
 
+        //样式调整
+        //设置成初始状态
+        function intialStatus(){
+            playhead.className = 'playhead intial';
+        }
+        //设置成播放状态
+        function playStatus(){
+            playhead.className = 'playhead';
+        }
         function mouseDown() {
+            //样式调整
+            playStatus();
+
             onplayhead = true;
             window.addEventListener('mousemove', moveplayhead, true);
             audioPlayer.removeEventListener('timeupdate', timeUpdate, false);
         }
 
         function mouseUp(e) {
+            //样式调整
+            if (parseInt(playhead.style.marginLeft) <= 0) {
+                intialStatus();
+            }
+
             if (onplayhead == true) {
                 moveplayhead(e);
                 window.removeEventListener('mousemove', moveplayhead, true);
@@ -146,6 +167,9 @@ var AudioPlayer = (function () {
         }
 
         function play() {
+            //样式控制
+            playStatus();
+
             // start music
             if (audioPlayer.paused) {
                 audioPlayer.play();
@@ -163,12 +187,40 @@ var AudioPlayer = (function () {
         function timeUpdate() {
             var playPercent = audioPlayer.currentTime / duration;
             var playPercentWidth = timelineWidth * playPercent;
-            currentTime.innerHTML = (audioPlayer.currentTime / 60).toFixed(2);
+            var playTime = transTime(parseInt(audioPlayer.currentTime));
+            currentTime.innerHTML = playTime;
+            
             playhead.style.marginLeft = playPercentWidth + "px";
             timeProgressBar.style.width = playPercent * 100 + "%";
-            if (playPercentWidth.currentTime == duration) {
+            if (audioPlayer.currentTime == duration) {
                 playButton.className = "";
                 playButton.className = "playbutton play";
+            }
+        }
+        function transTime(time){
+            if (time<10) {
+                return('00:0'+time);
+            }else if(time<60){
+                return('00:'+time);
+            }else if(time<600){
+                var i = parseInt(time/60);
+                var j = parseInt(time%60);
+                if (j<10) {
+                    return('0'+i+':0'+j);    
+                }else{
+                    return('0'+i+':'+j); 
+                }
+                
+            }else if(time<6000){
+                var i = parseInt(time/60);
+                var j = parseInt(time%60);
+                if (j<10) {
+                    return(i+':0'+j);    
+                }else{
+                    return(i+':'+j); 
+                }
+            }else{
+                return time;
             }
         }
 
@@ -201,18 +253,19 @@ var AudioPlayer = (function () {
         var timeProgressBar = this.timeProgressBar;
         var playButton = this.playButton;
         var currentTime = this.currentTime;
+        var transTime = this.transTime;
+
         playButton.setAttribute("disabled", "true");
 
         var recoding = setInterval(
             function showProgress() {
-                ct = ct + 0.5;
-                currentTime.innerHTML = ct;
+                ct = ct + 1;
+                currentTime.innerHTML = transTime(ct);
                 var playPercent = ct / recordTime;
                 var playPercentWidth = timeLineWidth * playPercent;
                 playhead.style.marginLeft = playPercentWidth + "px";
                 timeProgressBar.style.width = playPercent * 100 + "%";
-            }, 500);
-
+            }, 1000);
 
         this.recording = recoding;
 
