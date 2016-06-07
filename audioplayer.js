@@ -56,6 +56,8 @@ var AudioPlayer = (function () {
         volumeLine.appendChild(volumeLineHead);
         myAudioPlayer.appendChild(volumeLine);
 
+        currentTime.innerHTML = '00:00';
+
         if (config.hasOwnProperty("audiosrc")) {
             audioPlayer.setAttribute('src', config.audiosrc);
         }
