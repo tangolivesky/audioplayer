@@ -23,6 +23,7 @@ var AudioPlayer = (function () {
         var timelineWidth = 230;
         var volumelinewidth = 50;
         var onplayhead = false;
+        var volumeStatus = [];
 
         this.myAudioPlayer = myAudioPlayer;
         this.playhead = playhead;
@@ -103,6 +104,23 @@ var AudioPlayer = (function () {
         }, false);
         //volumeLineHead.addEventListener('mousedown', volumeMouseDown, false);
         //window.addEventListener('mouseup', volumeMouseUp, false);
+        //声音按钮控制
+        volumeHorn.addEventListener('click',function(event){
+            if (audioPlayer.volume > 0) {
+                volumeStatus[0] = audioPlayer.volume;
+                volumeStatus[1] = volumeHorn.className;
+                volumeStatus[2] = volumeLineBar.style.width;
+                volumeStatus[3] = volumeLineHead.style.marginLeft;
+                volumeHorn.className = 'horn';
+                movevolumehead(event);
+                audioPlayer.volume = volumeClickPercent(event);
+            }else{
+                audioPlayer.volume = volumeStatus[0];
+                volumeHorn.className = volumeStatus[1];
+                volumeLineBar.style.width = volumeStatus[2];
+                volumeLineHead.style.marginLeft = volumeStatus[3];
+            }
+        },false);
 
         //样式调整
         //设置成初始状态
@@ -174,7 +192,7 @@ var AudioPlayer = (function () {
                 volumeLineBar.style.width = newMargLeft * 100 / volumelinewidth + "%";
             }
             if (newMargLeft < 0) {
-                volumeLineHead.style.marginLeft = "0px";
+                volumeLineHead.style.marginLeft = "-10px";
                 volumeLineBar.style.width = "0%";
             }
             if (newMargLeft > timelineWidth) {
