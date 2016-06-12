@@ -1,18 +1,19 @@
 .audioplayer{
     width: 400px;
-    height: 30px !important;
+    height: 26px !important;
     background-color: #eeeeee !important;
     border-radius: 5px !important;
     margin-bottom: 10px !important;
+    display: inline-block;
 }
 
 .audioplayer .playbutton{
-    height:30px !important;
-    width: 30px !important;
+    height: 26px !important;
+    width: 26px !important;
     border: none !important;
-    float:left !important;
-    outline:none !important;
-    margin:0 5px !important;
+    float: left !important;
+    outline: none !important;
+    margin: 0 5px !important;
 }
 
 .audioplayer .play{
@@ -31,8 +32,8 @@
 
 .audioplayer .timeline{
     width: 240px !important;
-    height: 6px !important;
-    margin-top: 12px !important;
+    height: 4px !important;
+    margin-top: 11px !important;
     float: left !important;
     border-radius: 15px !important;
     background: #FFFFFF !important;
@@ -42,10 +43,9 @@
     width: 16px !important;
     height: 16px !important;
     border-radius: 100% !important;
-    margin-top: -5px !important;
+    margin-top: -6px !important;
     background: #2fc8a6 !important;
     position: relative !important;
-    /*padding: 2px;*/
 }
 .audioplayer .playhead.intial{
     background: #cdcdcd !important;
@@ -71,17 +71,17 @@
 
 .audioplayer .current-time{
     float: left !important;
-    height: 30px !important;
-    line-height: 30px !important;
+    height: 26px !important;
+    line-height: 26px !important;
     padding: 0 10px !important;
     color:#666;
 }
 
 .audioplayer .audio-line{
     float: left !important;
-    width:50px !important;
-    height: 6px !important;
-    margin-top: 12px !important;
+    width: 50px !important;
+    height: 4px !important;
+    margin-top: 11px !important;
     border-radius: 15px !important;
     background: #FFFFFF !important;
     position: relative !important;
@@ -89,12 +89,12 @@
 }
 
 .audioplayer .audio-line-head{
-    width: 16px !important;
-    height: 16px !important;
+    width: 12px !important;
+    height: 12px !important;
     border-radius: 100% !important;
-    margin-top: -5px !important;
+    margin-top: -4px !important;
     background: #2fc8a6 !important;
-    margin-left: 40px ;
+    margin-left: 40px;
 }
 
 .audioplayer .audio-line-bar{
@@ -113,7 +113,7 @@
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAAuCAYAAABnNToWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MzI2NEFFRkYyQzk1MTFFNkJBM0Q4NkVBMTQ1MDg4OUMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MzI2NEFGMDAyQzk1MTFFNkJBM0Q4NkVBMTQ1MDg4OUMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDozMjY0QUVGRDJDOTUxMUU2QkEzRDg2RUExNDUwODg5QyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDozMjY0QUVGRTJDOTUxMUU2QkEzRDg2RUExNDUwODg5QyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/S0aIAAAIYSURBVHjaYtQ/sYyBnuCCeSRNzWdiGGZg2HmIhdoGhvDLBf3/z8Dw7/8/DkYGxr/rPj9eOWQ9FMQnG3739YuQ82y/QkB8g5+saxjYGYamhwJ4pOPvvnoedJHjjx9M7MqfzwEM7BxDLw8F8cqG33vzEsUzIPCPmYlpyBUKEM+8CLmE5pkhWSiAktmd18+D8HmG1vUO1WIoTEDe/8HbV/6DJWYo8hCoNLvx4mnSBfbfgZRYHrVvBeOAewhcNL96HkWNmFnmFPF/QPMQMM9EAT0TfnGQJTOyYghUmt1/83JQewYcQ6BQZ2SEJOV///+zAquOHyA2sNny+++/v7xAud8gsdsvn0UNds+APfT43Ru/s2w/wwmq5GAYEoDp4u+PwcOq+zAQzZPR/tCoh0Y9NOqhUQ+NemjUQ6MeGvUQdTzE8vvv32HlIUs+iYnDyUMssiJia1PZZGYQUnjtycPio4xfMge9h5a8vn2CGIVx4mrzGV4+YxjsniK6UFj06tZpRTHJRdb/eaYPm1IOFJuD3VMkF9vU9FT43mVMA+4hanqKj52TedBUrCBPKYtLzafEU+qSMn8HjYdgBQUlnipRNv036Jo+g630o8qUJCj5RYuqMDC8foFST4GaVQYnl6OoHTLrFJa+uQPOU/aM/D0wsYFoVlF1FhyU/GJEVZlhTanvv36JMrz+OHQ9BEt+SNy7o/2hUQ+hAoAAAwCfQ9KwleDQCwAAAABJRU5ErkJggg==") !important;
     background-size: 90% auto;
     background-repeat: no-repeat;
-    margin-top: 8px;
+    margin-top: 6px;
     margin-right: 3px;
 }
 .audioplayer .horn.one{

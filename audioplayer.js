@@ -63,11 +63,18 @@ var AudioPlayer = (function () {
         myAudioPlayer.appendChild(volumeHorn);
         myAudioPlayer.appendChild(volumeLine);
 
-        currentTime.innerHTML = '00:00';
-
         if (config.hasOwnProperty("audiosrc")) {
             audioPlayer.setAttribute('src', config.audiosrc);
         }
+        else{
+            playButton.setAttribute("disabled", "disabled");
+            timeLine.setAttribute("disabled", "disabled");
+            volumeLine.setAttribute("disabled", "disabled");
+            playhead.setAttribute("disabled", "disabled");
+            volumeLineHead.setAttribute("disabled", "disabled");
+            volumeHorn.setAttribute("disabled", "disabled");
+        }
+
         if(config.hasOwnProperty("showVolume")){
             if(!config.showVolume){
                 volumeLine.style.display='block';
@@ -77,7 +84,9 @@ var AudioPlayer = (function () {
             }
         }
 
-
+        audioPlayer.addEventListener('loadedmetadata',function(){
+            currentTime.innerHTML = transTime(parseInt(audioPlayer.duration));
+        },false);
         playButton.addEventListener('click', play, false);
         audioPlayer.addEventListener('timeupdate', timeUpdate, false);
         audioPlayer.addEventListener('canplaythrough', function () {
@@ -157,19 +166,22 @@ var AudioPlayer = (function () {
         }
 
         function clickPercent(e) {
-            return (e.pageX - timeLine.offsetLeft) / timelineWidth;
+            var timelineleft = getOffsetLeft(timeLine);
+            return (e.pageX - timelineleft) / timelineWidth;
         }
 
         function volumeClickPercent(e) {
             var volume = 0;
-            if ((e.pageX - volumeLine.offsetLeft) / volumelinewidth < 0)volume = 0;
-            if ((e.pageX - volumeLine.offsetLeft) / volumelinewidth > 1)volume = 1;
-            if ((e.pageX - volumeLine.offsetLeft) / volumelinewidth >= 0 && (e.pageX - volumeLine.offsetLeft) / volumelinewidth <= 1)volume = (e.pageX - volumeLine.offsetLeft) / volumelinewidth;
+            var volumeLineLeft = getOffsetLeft(volumeLine);
+            if ((e.pageX - volumeLineLeft) / volumelinewidth < 0)volume = 0;
+            if ((e.pageX - volumeLineLeft) / volumelinewidth > 1)volume = 1;
+            if ((e.pageX - volumeLineLeft) / volumelinewidth >= 0 && (e.pageX - volumeLineLeft) / volumelinewidth <= 1)volume = (e.pageX - volumeLineLeft) / volumelinewidth;
             return volume;
         }
 
         function moveplayhead(e) {
-            var newMargLeft = e.pageX - timeLine.offsetLeft;
+            var timelineleft = getOffsetLeft(timeLine);
+            var newMargLeft = e.pageX - timelineleft;
             if (newMargLeft >= 0 && newMargLeft <= timelineWidth) {
                 playhead.style.marginLeft = newMargLeft + "px";
                 timeProgressBar.style.width = newMargLeft * 100 / timelineWidth + "%";
@@ -185,8 +197,8 @@ var AudioPlayer = (function () {
         }
 
         function movevolumehead(e) {
-            //debugger;
-            var newMargLeft = e.pageX - volumeLine.offsetLeft;
+            var volumeLineLeft = getOffsetLeft(volumeLine);
+            var newMargLeft = e.pageX - volumeLineLeft;
             if (newMargLeft >= 0 && newMargLeft <= volumelinewidth) {
                 volumeLineHead.style.marginLeft = newMargLeft-10 + "px";
                 volumeLineBar.style.width = newMargLeft * 100 / volumelinewidth + "%";
@@ -273,7 +285,17 @@ var AudioPlayer = (function () {
             }
             onplayhead = false;
         }
-
+        function getOffsetLeft( elem )
+        {
+            var offsetLeft = 0;
+            do {
+                if ( !isNaN( elem.offsetLeft ) )
+                {
+                    offsetLeft += elem.offsetLeft;
+                }
+            } while( elem = elem.offsetParent );
+            return offsetLeft;
+        }
     }
 
     AudioPlayer.prototype.getAudioPlayer = function () {
