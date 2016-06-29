@@ -1,11 +1,20 @@
-/**
- * Created by tony on 2016/6/3.
- */
 
-var AudioPlayer = (function () {
-    function AudioPlayer(cfg) {
+(function () {
+    this.AudioPlayer = function AudioPlayer() {
 
-        var config = cfg || {};
+        var config;
+
+        // Define option defaults
+        var defaults = {
+            audiosrc:"",
+            showVolume:true
+        }
+
+        // Create options by extending defaults with the passed in arugments
+        if (arguments[0] && typeof arguments[0] === "object") {
+            config = extendDefaults(defaults, arguments[0]);
+        }
+
         var duration;
         var myAudioPlayer = document.createElement("div");
         var audioPlayer = document.createElement("audio");
@@ -50,7 +59,7 @@ var AudioPlayer = (function () {
         volumeLineHead.className = "audio-line-head";
         volumeLineBar.className = "audio-line-bar";
         volumeHorn.className = 'horn full';
-        
+
         myAudioPlayer.appendChild(playButton);
         playhead.appendChild(playheadSpan);
         timeLine.appendChild(timeProgressBar);
@@ -236,7 +245,7 @@ var AudioPlayer = (function () {
             var playPercentWidth = timelineWidth * playPercent;
             var playTime = transTime(parseInt(audioPlayer.currentTime));
             currentTime.innerHTML = playTime;
-            
+
             playhead.style.marginLeft = playPercentWidth + "px";
             timeProgressBar.style.width = playPercent * 100 + "%";
             if (audioPlayer.currentTime == duration) {
@@ -253,18 +262,18 @@ var AudioPlayer = (function () {
                 var i = parseInt(time/60);
                 var j = parseInt(time%60);
                 if (j<10) {
-                    return('0'+i+':0'+j);    
+                    return('0'+i+':0'+j);
                 }else{
-                    return('0'+i+':'+j); 
+                    return('0'+i+':'+j);
                 }
-                
+
             }else if(time<6000){
                 var i = parseInt(time/60);
                 var j = parseInt(time%60);
                 if (j<10) {
-                    return(i+':0'+j);    
+                    return(i+':0'+j);
                 }else{
-                    return(i+':'+j); 
+                    return(i+':'+j);
                 }
             }else{
                 return time;
@@ -306,47 +315,15 @@ var AudioPlayer = (function () {
         this.audioPlayer.setAttribute('src',src);
     }
     
-    AudioPlayer.prototype.record = function (recordTime) {
+    // Utility method to extend defaults with user options
+    function extendDefaults(source, properties) {
+        var property;
+        for (property in properties) {
+            if (properties.hasOwnProperty(property)) {
+                source[property] = properties[property];
+            }
+        }
+        return source;
+    }
 
-        var ct = 0;
-        var playhead = this.playhead;
-        var timeLineWidth = this.timelineWidth;
-        var timeProgressBar = this.timeProgressBar;
-        var playButton = this.playButton;
-        var currentTime = this.currentTime;
-        var transTime = this.transTime;
-        var intialStatus = this.intialStatus;
-        var playStatus = this.playStatus;
-
-        playButton.setAttribute("disabled", "true");
-        var recoding = setInterval(
-            function showProgress() {
-                ct = ct + 1;
-                currentTime.innerHTML = transTime(ct);
-                var playPercent = ct / recordTime;
-                var playPercentWidth = timeLineWidth * playPercent;
-                playhead.style.marginLeft = playPercentWidth + "px";
-                timeProgressBar.style.width = playPercent * 100 + "%";
-            }, 1000);
-
-        this.recording = recoding;
-
-        setTimeout(function stopProgress() {
-            clearInterval(recoding);
-            playButton.removeAttribute("disabled");
-
-        }, recordTime * 1000);
-
-        
-        playStatus();
-    };
-
-    AudioPlayer.prototype.stoprecord = function(){
-
-        var recording = this.recording;
-        clearInterval(recoding);
-        playButton.removeAttribute("disabled");
-    };
-
-    return AudioPlayer;
 })();

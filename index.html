@@ -34,20 +34,12 @@
     var audioPlayer = new AudioPlayer(config);
     var audioPlayer2 = new AudioPlayer(config);
 
+
     document.getElementById("audiopalylist").appendChild(audioPlayer.getAudioPlayer());
 
-    audioPlayer.setAudioSrc("http://www.alexkatz.me/codepen/music/interlude.mp3");
+    document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
 
 
-    //document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
-
-    //audioPlayer.record(20);
-
-    function stoprecord(){
-        audioPlayer.stoprecord();
-    }
-
-    //document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
 
 </script>
 
