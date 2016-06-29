@@ -6,7 +6,8 @@
 
         // Define option defaults
         var defaults = {
-            audiosrc:"",
+            audiodom:'',
+            audiosrc:'',
             showVolume:true
         }
 
@@ -60,6 +61,12 @@
         volumeLineBar.className = "audio-line-bar";
         volumeHorn.className = 'horn full';
 
+
+        if(config.audiodom === ''){
+            document.body.appendChild(myAudioPlayer);
+        }else{
+            document.getElementById(config.audiodom).appendChild(myAudioPlayer);
+        }
         myAudioPlayer.appendChild(playButton);
         playhead.appendChild(playheadSpan);
         timeLine.appendChild(timeProgressBar);

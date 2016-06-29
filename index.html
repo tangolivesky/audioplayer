@@ -10,16 +10,12 @@
 
 
 <div>
-    <div style="float: left; width: 300px; height: 100px;">
 
+    <div id="audio1">
     </div>
-    <div id="audiopalylist">
-
+    <div id="audio2">
     </div>
 </div>
-
-
-<button type="button" id="btn_stop" onclick="stoprecord()">停止</button>
 
 
 <script type="text/javascript" src="audioplayer.js"></script>
@@ -27,17 +23,19 @@
 <script type="text/javascript">
 
 
-    var config = {
+
+    var audioPlayer = new AudioPlayer({
+        audiodom:"audio1",
         audiosrc:"http://www.alexkatz.me/codepen/music/interlude.mp3",
         showVolume:false
-    }
-    var audioPlayer = new AudioPlayer(config);
-    var audioPlayer2 = new AudioPlayer(config);
+    });
 
 
-    document.getElementById("audiopalylist").appendChild(audioPlayer.getAudioPlayer());
-
-    document.getElementById("audiopalylist").appendChild(audioPlayer2.getAudioPlayer());
+    var audioPlayer2 = new AudioPlayer({
+        audiodom:"audio2",
+        audiosrc:"http://www.alexkatz.me/codepen/music/interlude.mp3",
+        showVolume:false
+    });
 
 
 
