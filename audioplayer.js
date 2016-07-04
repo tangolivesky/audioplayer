@@ -93,10 +93,11 @@
 
         if(config.hasOwnProperty("showVolume")){
             if(!config.showVolume){
-                volumeLine.style.display='block';
-                volumeLineHead.style.display='block';
-                volumeLineBar.style.display='block';
-                myAudioPlayer.style.width ='430px';
+                volumeLine.style.display='none';
+                volumeLineHead.style.display='none';
+                volumeLineBar.style.display='none';
+                volumeHorn.style.display = 'none';
+                myAudioPlayer.style.width ='340px';
             }
         }
 
